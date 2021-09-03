@@ -83,6 +83,6 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Azure app Service Deploy: website'
             inputs:
-              azureSubscription: 'Azure subscription 1'
+              azureServiceConnection: 'bikrishdevopsconnection'
               appName: '$(WebAppName)'
               package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
