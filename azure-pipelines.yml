@@ -94,14 +94,9 @@ stages:
       runOnce:
         deploy:
           steps:
-          - download: current
-            artifact: drop
-          - task: AzureWebApp@1
-            displayName: 'Azure App Service Deploy: website'
-            inputs:
-              azureSubscription: 'biksvc'
-              appName: '$(WebAppNameDev)'
-              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
+          - template: templates/deploy.yaml
+            parameters: 
+              WebAppName: $(WebAppNameDev)
 
 - stage: 'Test'
   displayName: 'Deploy the test environment'
@@ -123,14 +118,9 @@ stages:
       runOnce:
         deploy:
           steps:
-          - download: current
-            artifact: drop
-          - task: AzureWebApp@1
-            displayName: 'Azure App Service Deploy: website'
-            inputs:
-              azureSubscription: 'biksvc'
-              appName: '$(WebAppNameTest)'
-              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
+          - template: templates/deploy.yaml
+            parameters: 
+              WebAppName: $(WebAppNameTest)
 
 - stage: 'Staging'
   displayName: 'Deploy the test environment'
@@ -152,11 +142,6 @@ stages:
       runOnce:
         deploy:
           steps:
-          - download: current
-            artifact: drop
-          - task: AzureWebApp@1
-            displayName: 'Azure App Service Deploy: website'
-            inputs:
-              azureSubscription: 'biksvc'
-              appName: '$(WebAppNameStaging)'
-              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
+          - template: templates/deploy.yaml
+            parameters: 
+              WebAppName: $(WebAppNameStaging)
